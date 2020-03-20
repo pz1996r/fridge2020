@@ -39,7 +39,7 @@
     "start_server": "./node_modules/.bin/netlify-lambda serve express",
     "build_server": "./node_modules/.bin/netlify-lambda build express",
     "prod": "npm run build; npm run build_server",
-    "local": "npm run start_server ;npm run start"
+    "start_client": "npm run start"
   },
   "eslintConfig": {
     "extends": "react-app"
