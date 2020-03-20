@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 
 module.exports = function () {
   // const db = config.get("db");
+  // local **************************************************************
+  const dotenv = require('dotenv');
+  dotenv.config();
+  // end local ******************************************************************
   const { jwtPrivateKey, db } = process.env;
   mongoose
     .connect(db, {

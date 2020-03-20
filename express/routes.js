@@ -1,4 +1,8 @@
 // const express = __non_webpack_require__('express');
+// local *******************************************************************************************************
+const dotenv = require('dotenv');
+dotenv.config();
+// end local *****************************************************************************************************
 const { jwtPrivateKey, db } = process.env;
 const express = require('express');
 const serverless = require('serverless-http');

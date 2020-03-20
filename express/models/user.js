@@ -1,7 +1,12 @@
+// local ******************************************************************************************************
+const dotenv = require('dotenv');
+dotenv.config();
+// end local ****************************************************************************************************
 const jwt = require('jsonwebtoken');
 // const config = require('config');
 const Joi = require('joi');
 const mongoose = require('mongoose');
+
 const { jwtPrivateKey, db } = process.env;
 
 const userSchema = new mongoose.Schema({
