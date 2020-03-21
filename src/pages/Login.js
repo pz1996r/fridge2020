@@ -1,5 +1,6 @@
 import React from 'react';
-import { PropTypes as RouterPropTypes } from 'react-router';
+// import { PropTypes as RouterPropTypes } from 'react-router';
+import { ReactRouterPropTypes as RouterPropTypes } from 'react-router-prop-types';
 // absolutne importy
 // import LoginForm from 'components/LoginForm';
 import LoginForm from '../components/LoginForm';
