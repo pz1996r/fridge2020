@@ -66,11 +66,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
     "*.js": [
+      "prettier --config .prettierrc --write",
       "eslint --fix",
       "git add"
     ]

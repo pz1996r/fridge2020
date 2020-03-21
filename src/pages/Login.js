@@ -14,6 +14,7 @@ class Login extends React.Component {
       <LoginForm
         handleSuccessfulAuth={this.handleSuccessfulAuth}
         handleUnSuccessfulAuth={this.props.handleUnSuccessfulAuth}
+        handleUnSuccessfulAuth={this.props.handleUnSuccessfulAuth}
       />
     );
   }
