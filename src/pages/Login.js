@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes as RouterPropTypes } from 'react-router';
 import LoginForm from '../components/LoginForm';
 
 class Login extends React.Component {
@@ -10,13 +11,19 @@ class Login extends React.Component {
   }
 
   render() {
+    const { handleUnSuccessfulAuth } = this.props;
     return (
       <LoginForm
         handleSuccessfulAuth={this.handleSuccessfulAuth}
-        handleUnSuccessfulAuth={this.props.handleUnSuccessfulAuth}
-        handleUnSuccessfulAuth={this.props.handleUnSuccessfulAuth}
+        handleUnSuccessfulAuth={handleUnSuccessfulAuth}
       />
     );
   }
 }
+
+Login.propTypes = {
+  history: RouterPropTypes.history.isRequired,
+  handleSuccessfulAuth: RouterPropTypes.func.isRequired,
+  handleUnSuccessfulAuth: RouterPropTypes.func.isRequired,
+};
 export default Login;
