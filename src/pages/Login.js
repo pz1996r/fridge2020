@@ -1,8 +1,8 @@
 import React from 'react';
 import { PropTypes as RouterPropTypes } from 'react-router';
 // absolutne importy
-import LoginForm from 'components/LoginForm';
-// import LoginForm from '../components/LoginForm';
+// import LoginForm from 'components/LoginForm';
+import LoginForm from '../components/LoginForm';
 
 class Login extends React.Component {
   handleSuccessfulAuth(token, name) {
