@@ -1,13 +1,15 @@
-import React from "react";
-import { LinkTo as Link, RedirectContainer, P, FormWrapper, Form, FormItem, Input, InputItemBar, Label, H1, Span, Button, CenterButton, Error } from '../components/form_items/form_components';
+import React from 'react';
+import {
+    LinkTo as Link, RedirectContainer, P, FormWrapper, Form, FormItem, Input, InputItemBar, Label, H1, Span, Button, CenterButton, Error,
+} from './form_items/form_components';
 
 class FormsPage extends React.Component {
     constructor(props) {
         super(props);
         this.timer = null;
         this.state = {
-            name: "",
-            password: "",
+            name: '',
+            password: '',
             error: null,
             displayError: false,
             nameError: null,
@@ -19,50 +21,45 @@ class FormsPage extends React.Component {
         event.preventDefault();
         // const checkobj2 = JSON.stringify(Object.fromEntries(new FormData(event.target)));
         const obj = { name: this.state.name, password: this.state.password };
-        if (!this.state.nameError && !this.state.passwordError && this.state.name !== "" & this.state.password !== "") {
+        if (!this.state.nameError && !this.state.passwordError && this.state.name !== '' & this.state.password !== '') {
             fetch('/.netlify/functions/routes/auth',
                 {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(obj)
-                }
-            ).then((response) => {
-                return response.json()
+                    body: JSON.stringify(obj),
+                }).then((response) => response.json()
                     .then((resp) => {
                         if (response.status !== 200) {
                             this.setState({
                                 error: resp,
                                 displayError: true,
-                            })
+                            });
                             if (this.timer) { clearTimeout(this.timer); }
-                            this.timer = setTimeout(() => { this.setState({ displayError: false }) }, 3000)
+                            this.timer = setTimeout(() => { this.setState({ displayError: false }); }, 3000);
                         } else {
                             const token = response.headers.get('x-auth-token');
-                            this.props.handleSuccessfulAuth(token, resp['name']);
+                            this.props.handleSuccessfulAuth(token, resp.name);
                         }
-
-                    })
-            }).catch((err) => {
-                this.setState({
-                    error: 'Nie udało połączyć się z serwerem, spróbuj ponownie za chwilę.',
-                    displayError: true,
-                })
-                if (this.timer) { clearTimeout(this.timer); }
-                this.timer = setTimeout(() => { this.setState({ displayError: false }) }, 3000)
-            })
+                    })).catch((err) => {
+                        this.setState({
+                            error: 'Nie udało połączyć się z serwerem, spróbuj ponownie za chwilę.',
+                            displayError: true,
+                        });
+                        if (this.timer) { clearTimeout(this.timer); }
+                        this.timer = setTimeout(() => { this.setState({ displayError: false }); }, 3000);
+                    });
         } else {
             this.setState({
                 displayError: true,
-            })
+            });
             if (this.timer) { clearTimeout(this.timer); }
-            this.timer = setTimeout(() => { this.setState({ displayError: false }) }, 3000)
+            this.timer = setTimeout(() => { this.setState({ displayError: false }); }, 3000);
         }
-
     };
 
-    changeHandler = event => {
+    changeHandler = (event) => {
         this.setState({ [event.target.name]: event.target.value });
     };
 
@@ -76,34 +73,39 @@ class FormsPage extends React.Component {
                 passwordError: this.state.password.length < 5,
                 error,
                 displayError: true,
-            })
+            });
             if (this.timer) { clearTimeout(this.timer); }
-            this.timer = setTimeout(() => { this.setState({ displayError: false }) }, 3000)
+            this.timer = setTimeout(() => { this.setState({ displayError: false }); }, 3000);
         } else if (this.state.name === this.state.password) {
-
             this.setState({
                 nameError: true,
                 passwordError: true,
-                error: 'Login and Password cannot be the same.'
-            })
+                error: 'Login and Password cannot be the same.',
+            });
             if (this.timer) { clearTimeout(this.timer); }
-            this.timer = setTimeout(() => { this.setState({ displayError: false }) }, 3000)
+            this.timer = setTimeout(() => { this.setState({ displayError: false }); }, 3000);
         } else {
             this.setState({
                 nameError: false,
                 passwordError: false,
                 displayError: false,
-            })
+            });
         }
     }
+
     componentWillUnmount() {
         if (this.timer) { clearTimeout(this.timer); }
     }
+
     render() {
         return (
             <FormWrapper>
                 <Form onSubmit={this.submitHandler} autoComplete="off">
-                    <H1><Span>Login</Span> to your account</H1>
+                    <H1>
+                        <Span>Login</Span>
+                        {' '}
+              to your account
+            </H1>
                     <Error className="form-error" error={this.state.displayError}>{this.state.error}</Error>
                     <FormItem>
                         <Input
@@ -134,7 +136,10 @@ class FormsPage extends React.Component {
                     <CenterButton>
                         <Button type="submit">Login</Button>
                     </CenterButton>
-                    <RedirectContainer><P>Don't have an account? </P><Link to="/register">Sign up here</Link></RedirectContainer>
+                    <RedirectContainer>
+                        <P>Don't have an account? </P>
+                        <Link to="/register">Sign up here</Link>
+                    </RedirectContainer>
                 </Form>
             </FormWrapper>
         );
