@@ -1,5 +1,6 @@
 import React from 'react';
-import { PropTypes as RouterPropTypes } from 'react-router';
+// import { PropTypes as RouterPropTypes } from 'react-router';
+import { ReactRouterPropTypes as RouterPropTypes } from 'react-router-prop-types';
 import RegisterForm from '../components/RegisterForm';
 
 class Register extends React.Component {
