@@ -1,21 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  LinkTo as Link,
-  RedirectContainer,
-  P,
-  FormWrapper,
-  Form,
-  FormItem,
-  Input,
-  InputItemBar,
-  Label,
-  H1,
-  Span,
-  Button,
-  CenterButton,
-  Error,
-} from './form_items/form_components';
+import { LinkTo as Link, RedirectContainer, P, FormWrapper, Form, FormItem, Input, InputItemBar, Label, H1, Span, Button, CenterButton, Error } from './form_items/form_components';
 
 class FormsPage extends React.Component {
   constructor(props) {
@@ -70,7 +55,8 @@ class FormsPage extends React.Component {
             }
           }),
         )
-        .catch(() => {
+        .catch(info => {
+          console.log(info);
           this.setState({
             error: 'Nie udało połączyć się z serwerem, spróbuj ponownie za chwilę.',
             displayError: true,
@@ -150,28 +136,12 @@ class FormsPage extends React.Component {
             {error}
           </Error>
           <FormItem>
-            <Input
-              value={name}
-              name="name"
-              onChange={this.changeHandler}
-              onBlur={this.blurHandler}
-              type="text"
-              id="FormLogin"
-              placeholder=" "
-            />
+            <Input value={name} name="name" onChange={this.changeHandler} onBlur={this.blurHandler} type="text" id="FormLogin" placeholder=" " />
             <Label htmlFor="FormLogin">Login</Label>
             <InputItemBar error={nameError} />
           </FormItem>
           <FormItem>
-            <Input
-              value={password}
-              name="password"
-              onChange={this.changeHandler}
-              onBlur={this.blurHandler}
-              type="password"
-              id="FormPassword"
-              placeholder=" "
-            />
+            <Input value={password} name="password" onChange={this.changeHandler} onBlur={this.blurHandler} type="password" id="FormPassword" placeholder=" " />
             <Label htmlFor="FormPassword">Password</Label>
             <InputItemBar error={passwordError} />
           </FormItem>
