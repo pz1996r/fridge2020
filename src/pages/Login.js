@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // absolutne importy
-// import LoginForm from 'components/LoginForm';
-import LoginForm from '../components/LoginForm';
+import LoginForm from 'components/LoginForm';
+// import LoginForm from '../components/LoginForm';
 
 class Login extends React.Component {
   handleSuccessfulAuth(token, name) {
@@ -13,19 +13,12 @@ class Login extends React.Component {
   }
 
   render() {
-    const { handleUnSuccessfulAuth } = this.props;
-    return (
-      <LoginForm
-        handleSuccessfulAuth={this.handleSuccessfulAuth}
-        handleUnSuccessfulAuth={handleUnSuccessfulAuth}
-      />
-    );
+    return <LoginForm handleSuccessfulAuth={this.handleSuccessfulAuth} />;
   }
 }
 
 Login.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   handleSuccessfulAuth: PropTypes.func.isRequired,
-  handleUnSuccessfulAuth: PropTypes.func.isRequired,
 };
 export default Login;

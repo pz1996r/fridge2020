@@ -11,18 +11,11 @@ class Register extends React.Component {
   };
 
   render() {
-    const { handleUnSuccessfulAuth } = this.props;
-    return (
-      <RegisterForm
-        handleSuccessfulAuth={this.handleSuccessfulAuth}
-        handleUnSuccessfulAuth={handleUnSuccessfulAuth}
-      />
-    );
+    return <RegisterForm handleSuccessfulAuth={this.handleSuccessfulAuth} />;
   }
 }
 Register.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   handleSuccessfulAuth: PropTypes.func.isRequired,
-  handleUnSuccessfulAuth: PropTypes.func.isRequired,
 };
 export default Register;
