@@ -38,6 +38,7 @@ class FormsPage extends React.Component {
       })
         .then(response =>
           response.json().then(resp => {
+            console.log(response, 'adad', resp);
             if (response.status !== 200) {
               this.setState({
                 error: resp,
