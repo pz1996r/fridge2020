@@ -28,7 +28,9 @@ class FormsPage extends React.Component {
     const { handleSuccessfulAuth } = this.props;
     // const checkobj2 = JSON.stringify(Object.fromEntries(new FormData(event.target)));
     const obj = { name, password };
+    console.log('a');
     if (!nameError && !passwordError && name !== '' && password !== '') {
+      console.log('b');
       fetch('/.netlify/functions/routes/auth', {
         method: 'POST',
         headers: {
