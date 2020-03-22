@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // absolutne importy
-import LoginForm from 'components/LoginForm';
-// import LoginForm from '../components/LoginForm';
+// import LoginForm from 'components/LoginForm';
+import LoginForm from '../components/LoginForm';
 
 class Login extends React.Component {
   handleSuccessfulAuth(token, name) {
