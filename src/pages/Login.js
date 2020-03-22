@@ -1,6 +1,5 @@
 import React from 'react';
-// import { PropTypes as RouterPropTypes } from 'react-router';
-import { ReactRouterPropTypes as RouterPropTypes } from 'react-router-prop-types';
+import PropTypes from 'prop-types';
 // absolutne importy
 // import LoginForm from 'components/LoginForm';
 import LoginForm from '../components/LoginForm';
@@ -25,8 +24,8 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: RouterPropTypes.history.isRequired,
-  handleSuccessfulAuth: RouterPropTypes.func.isRequired,
-  handleUnSuccessfulAuth: RouterPropTypes.func.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  handleSuccessfulAuth: PropTypes.func.isRequired,
+  handleUnSuccessfulAuth: PropTypes.func.isRequired,
 };
 export default Login;

@@ -1,6 +1,5 @@
 import React from 'react';
-// import { PropTypes as RouterPropTypes } from 'react-router';
-import { ReactRouterPropTypes as RouterPropTypes } from 'react-router-prop-types';
+import PropTypes from 'prop-types';
 import RegisterForm from '../components/RegisterForm';
 
 class Register extends React.Component {
@@ -22,8 +21,8 @@ class Register extends React.Component {
   }
 }
 Register.propTypes = {
-  history: RouterPropTypes.history.isRequired,
-  handleSuccessfulAuth: RouterPropTypes.func.isRequired,
-  handleUnSuccessfulAuth: RouterPropTypes.func.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  handleSuccessfulAuth: PropTypes.func.isRequired,
+  handleUnSuccessfulAuth: PropTypes.func.isRequired,
 };
 export default Register;
