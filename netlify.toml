@@ -3,4 +3,5 @@ functions = "lambda"
 
 [[redirects]]
  from = "/*"
- to = "/index.html" status = 200
+ to = "/index.html" 
+ status = 200
