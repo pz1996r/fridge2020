@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+// import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import GlobalStyle from '../theme/GlobalStyle';
@@ -8,7 +8,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 
-const theme = { primary: 'red' };
+// const theme = { primary: 'red' };
 
 const PrivateRoute = ({ pushForwardProps, isLoaded, loggedInStatus, component: Component, ...rest }) => {
   const redirectLink = './login';
@@ -73,17 +73,17 @@ export default class AppRouter extends React.Component {
     return (
       <>
         <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <Router>
-            {/* <Route path="/" render={props => (props.history.location.pathname !== '/AddItemToDB' && props.history.location.pathname !== '/login' && props.history.location.pathname !== '/register' ? <Navigation {...props} loggedInStatus={this.state.loggedInStatus} /> : null)} />
+        {/* <ThemeProvider theme={theme}> */}
+        <Router>
+          {/* <Route path="/" render={props => (props.history.location.pathname !== '/AddItemToDB' && props.history.location.pathname !== '/login' && props.history.location.pathname !== '/register' ? <Navigation {...props} loggedInStatus={this.state.loggedInStatus} /> : null)} />
             <PrivateRoute path="/mealList" component={MealListPage} isLoaded={this.state.isLoaded} loggedInStatus={this.state.loggedInStatus} />
             <PrivateRoute path="/fridge" component={Fridge} isLoaded={this.state.isLoaded} loggedInStatus={this.state.loggedInStatus} />
             <PrivateRoute path="/AddItemToDB" component={AddItemToDBForm} isLoaded={this.state.isLoaded} loggedInStatus={this.state.loggedInStatus} /> */}
-            <PrivateRoute exact path="/" component={Home} isLoaded={isLoaded} loggedInStatus={loggedInStatus} pushForwardProps={{ loggedInStatus, name }} />
-            <Route exact path="/register" render={props => <Register {...props} loggedInStatus={loggedInStatus} handleSuccessfulAuth={this.handleSuccessfulAuth} />} />
-            <Route exact path="/login" render={props => <Login {...props} loggedInStatus={loggedInStatus} handleSuccessfulAuth={this.handleSuccessfulAuth} />} />
-          </Router>
-        </ThemeProvider>
+          <PrivateRoute exact path="/" component={Home} isLoaded={isLoaded} loggedInStatus={loggedInStatus} pushForwardProps={{ loggedInStatus, name }} />
+          <Route exact path="/register" render={props => <Register {...props} loggedInStatus={loggedInStatus} handleSuccessfulAuth={this.handleSuccessfulAuth} />} />
+          <Route exact path="/login" render={props => <Login {...props} loggedInStatus={loggedInStatus} handleSuccessfulAuth={this.handleSuccessfulAuth} />} />
+        </Router>
+        {/* </ThemeProvider> */}
       </>
     );
   }
