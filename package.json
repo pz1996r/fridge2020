@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@hapi/joi": "^16.1.8",
+    "@storybook/addon-knobs": "^5.3.17",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -28,7 +29,6 @@
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-router-prop-types": "^1.0.4",
     "react-scripts": "3.4.0",
     "serverless-http": "^2.3.2",
     "styled-components": "^5.0.1"
@@ -41,7 +41,9 @@
     "start_server": "./node_modules/.bin/netlify-lambda serve express",
     "build_server": "./node_modules/.bin/netlify-lambda build express",
     "prod": "npm run build; npm run build_server",
-    "start_client": "npm run start"
+    "start_client": "npm run start",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -56,6 +58,11 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.3.17",
+    "@storybook/addon-links": "^5.3.17",
+    "@storybook/addons": "^5.3.17",
+    "@storybook/preset-create-react-app": "^2.1.0",
+    "@storybook/react": "^5.3.17",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.0",
