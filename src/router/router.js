@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 // import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import GlobalStyle from '../theme/GlobalStyle';
+// import GlobalStyle from '../theme/GlobalStyle';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -72,7 +72,7 @@ export default class AppRouter extends React.Component {
     const { isLoaded, loggedInStatus, name } = this.state;
     return (
       <>
-        <GlobalStyle />
+        {/* <GlobalStyle /> */}
         {/* <ThemeProvider theme={theme}> */}
         <Router>
           {/* <Route path="/" render={props => (props.history.location.pathname !== '/AddItemToDB' && props.history.location.pathname !== '/login' && props.history.location.pathname !== '/register' ? <Navigation {...props} loggedInStatus={this.state.loggedInStatus} /> : null)} />
