@@ -4,17 +4,13 @@ import PropTypes from 'prop-types';
 // import LoginForm from 'components/LoginForm';
 import LoginForm from '../components/LoginForm';
 
-class Login extends React.Component {
-  handleSuccessfulAuth(token, name) {
-    const { handleSuccessfulAuth, history } = this.props;
-    // this.props.handleLogin(name, token);
+function Login(props) {
+  function SuccessfulAuth(token, name) {
+    const { handleSuccessfulAuth, history } = props;
     handleSuccessfulAuth(token, name);
     history.push('/');
   }
-
-  render() {
-    return <LoginForm handleSuccessfulAuth={this.handleSuccessfulAuth} />;
-  }
+  return <LoginForm handleSuccessfulAuth={SuccessfulAuth} />;
 }
 
 Login.propTypes = {
