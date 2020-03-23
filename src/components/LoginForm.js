@@ -158,6 +158,6 @@ class FormsPage extends React.Component {
 }
 
 FormsPage.propTypes = {
-  handleSuccessfulAuth: PropTypes.func.isRequired,
+  // handleSuccessfulAuth: PropTypes.func.isRequired,
 };
 export default FormsPage;
