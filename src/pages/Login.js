@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// absolutne importy
 import LoginForm from 'components/LoginForm';
-// import LoginForm from '../components/LoginForm';
 
 function Login(props) {
   function SuccessfulAuth(token, name) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from 'components/RegisterForm';
 
 class Register extends React.Component {
   handleSuccessfulAuth = (token, name) => {
