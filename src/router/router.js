@@ -71,7 +71,8 @@ export default class AppRouter extends React.Component {
   render() {
     const { isLoaded, loggedInStatus, name } = this.state;
     return (
-      <div>
+      <>
+        <GlobalStyle />
         <ThemeProvider theme={theme}>
           <Router>
             {/* <Route path="/" render={props => (props.history.location.pathname !== '/AddItemToDB' && props.history.location.pathname !== '/login' && props.history.location.pathname !== '/register' ? <Navigation {...props} loggedInStatus={this.state.loggedInStatus} /> : null)} />
@@ -83,8 +84,7 @@ export default class AppRouter extends React.Component {
             <Route exact path="/login" render={props => <Login {...props} loggedInStatus={loggedInStatus} handleSuccessfulAuth={this.handleSuccessfulAuth} />} />
           </Router>
         </ThemeProvider>
-        <GlobalStyle />
-      </div>
+      </>
     );
   }
 }
