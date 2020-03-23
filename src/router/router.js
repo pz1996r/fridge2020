@@ -91,7 +91,8 @@ export default class AppRouter extends React.Component {
 // /.netlify/functions/routes/api1'
 
 PrivateRoute.propTypes = {
-  pushForwardProps: PropTypes.func.isRequired,
+  // pushForwardProps: PropTypes.object.isRequired,
+  pushForwardProps: PropTypes.objectOf(PropTypes.object()).isRequired,
   isLoaded: PropTypes.bool.isRequired,
   loggedInStatus: PropTypes.bool.isRequired,
   component: PropTypes.node.isRequired,

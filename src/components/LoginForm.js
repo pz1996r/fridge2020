@@ -28,9 +28,7 @@ class FormsPage extends React.Component {
     const { handleSuccessfulAuth } = this.props;
     // const checkobj2 = JSON.stringify(Object.fromEntries(new FormData(event.target)));
     const obj = { name, password };
-    console.log('a');
     if (!nameError && !passwordError && name !== '' && password !== '') {
-      console.log('b');
       fetch('/.netlify/functions/routes/auth', {
         method: 'POST',
         headers: {
@@ -40,7 +38,6 @@ class FormsPage extends React.Component {
       })
         .then(response =>
           response.json().then(resp => {
-            console.log(response, 'adad', resp);
             if (response.status !== 200) {
               this.setState({
                 error: resp,
@@ -58,8 +55,7 @@ class FormsPage extends React.Component {
             }
           }),
         )
-        .catch(info => {
-          console.log(info);
+        .catch(() => {
           this.setState({
             error: 'Nie udało połączyć się z serwerem, spróbuj ponownie za chwilę.',
             displayError: true,

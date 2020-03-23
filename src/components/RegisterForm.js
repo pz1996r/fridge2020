@@ -20,7 +20,7 @@ class FormsPage extends React.Component {
     // const checkobj2 = JSON.stringify(Object.fromEntries(new FormData(event.target)));
     const obj = { name, password, email };
     if (!nameError && !passwordError && name !== '' && password !== '') {
-      fetch('http://localhost:8000/api/users', {
+      fetch('/.netlify/functions/routes/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
