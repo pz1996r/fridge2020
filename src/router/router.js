@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import GlobalStyle from '../theme/GlobalStyle';
-import Loader from '../pages/Loader';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+import GlobalStyle from 'theme/GlobalStyle';
+import Loader from 'pages/Loader';
+import Home from 'pages/Home';
+import Login from 'pages/Login';
+import Register from 'pages/Register';
 
 const theme = { primary: 'red' };
 
