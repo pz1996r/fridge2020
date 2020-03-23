@@ -1,10 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700&display=swap&subset=latin-ext');
+    /* @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,500,600,700&display=swap&subset=latin-ext'); */
 
     *,*::before, *::after{
         box-sizing:border-box;
+        color:red;
     }
     /* happy rems :) */
     html{
@@ -13,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     /* lepiej urzyć fontu bez szeryfowego !!! */
     body{
         font-size: 1.6rem;
-        font-family: 'Playfair Display', serif;
+        /* font-family: 'Playfair Display', serif; */
     }
 `;
 export default GlobalStyle;
