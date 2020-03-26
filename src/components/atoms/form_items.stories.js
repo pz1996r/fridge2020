@@ -4,7 +4,7 @@ import { Button, Input, H1, Span, P, LinkTo, RedirectContainer } from './FormAto
 
 export default {
   component: Button,
-  title: 'Button',
+  title: 'Form Atoms',
   decorators: [StoryRouter()],
 };
 

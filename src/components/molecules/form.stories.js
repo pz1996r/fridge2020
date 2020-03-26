@@ -4,7 +4,7 @@ import Form from './Form';
 
 export default {
   component: Form,
-  title: 'Formularz',
+  title: 'Form molecules',
   decorators: [StoryRouter()],
 };
 

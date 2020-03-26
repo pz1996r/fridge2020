@@ -28,7 +28,7 @@ export const Button = styled.button`
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   padding: 0.84rem 2.14rem;
   font-size: 0.81rem;
-  background-color: ${({ color }) => color || '#3f51b5'};
+  background-color: ${({ requesting }) => (requesting ? '#787878' : '#3f51b5')};
 
   &:hover {
     outline: 0;
