@@ -51,8 +51,16 @@ class Form extends Component {
         { error: 'Failed to connect to server', active: false },
       ],
       req: {},
+      requesting: false,
     };
   }
+
+  requestHandler = bolean => {
+    this.setState({
+      requesting: bolean,
+    });
+    return true;
+  };
 
   submitHandler = async event => {
     event.preventDefault();
@@ -62,14 +70,17 @@ class Form extends Component {
     const URL = type === 'LOGIN' ? '/.netlify/functions/routes/auth' : '/.netlify/functions/routes/users';
     return (
       !this.validateHandler() &&
+      this.requestHandler(true) &&
       Axios.post(URL, request, { headers: { 'Content-Type': 'application/json' } })
         .then(resp => {
+          this.requestHandler(false);
           const token = resp.headers['x-auth-token'];
           handleSuccessfulAuth(token, resp.name);
           history.push('/');
         })
         .catch(err => {
           this.validateHandler(null, err.response.status);
+          this.requestHandler(false);
         })
     );
   };
@@ -95,13 +106,15 @@ class Form extends Component {
       error[4].active = status === 400 ? true : error[4].active;
       error[5].active = status === 404 || status === 500 ? true : error[5].active;
     } else {
-      const SubmitBreaker = error.find(err => err.active === true) || !req.name || !req.password;
-      return SubmitBreaker;
+      error[0].active = !req.name ? true : error[0].active;
+      error[1].active = !req.password ? true : error[1].active;
     }
+    // SubmitBraker validacja formularza przed jego wysłaniem, jeżeli wynik to TRUE, to formularz nie zostanie wysłany.
+    const SubmitBreaker = error.find(err => err.active === true);
     this.setState({
       error,
     });
-    return null;
+    return SubmitBreaker;
   };
 
   changeHandler = event => {
@@ -118,7 +131,7 @@ class Form extends Component {
   };
 
   render() {
-    const { error, req } = this.state;
+    const { error, req, requesting } = this.state;
     const { type } = this.props;
     const { submitHandler, changeHandler, validateHandler } = this;
     return (
@@ -144,7 +157,7 @@ class Form extends Component {
             {type === 'LOGIN' ? null : <Input placeholder="EMAIL" type="text" autoComplete="new-password" name="email" value={req.email || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />}
             <Input placeholder="LOGIN" type="text" name="name" value={req.name || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />
             <Input placeholder="PASSWORD" type="password" name="password" value={req.password || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />
-            <Button>{type === 'LOGIN' ? 'Login' : 'Register'}</Button>
+            <Button requesting={requesting}>{type === 'LOGIN' ? 'Login' : 'Register'}</Button>
           </StyledForm>
           <RedirectContainer>
             {type === 'LOGIN' ? (
