@@ -16,12 +16,6 @@ export const Input = styled.input`
   }
 `;
 
-export const Form = styled.form`
-  text-align: left;
-  margin: 0 auto;
-  max-width: 270px;
-`;
-
 export const Button = styled.button`
   color: #fff;
   text-transform: uppercase;
@@ -46,14 +40,14 @@ export const Button = styled.button`
   }
 `;
 
-export const Span = styled.span`
-  color: #3f51b5;
-`;
-
 export const H1 = styled.h1`
   margin-bottom: 30px;
   font-size: 20px;
   text-align: center;
+`;
+
+export const Span = styled.span`
+  color: #3f51b5;
 `;
 
 export const RedirectContainer = styled.div`
@@ -63,6 +57,7 @@ export const RedirectContainer = styled.div`
   flex-direction: row;
   margin: 24px 0;
 `;
+
 export const P = styled.p`
   margin: 0;
   font-size: 12px;
@@ -73,8 +68,4 @@ export const LinkTo = styled(Link)`
   color: gray !important;
   margin-left: 8px;
   text-decoration: none;
-`;
-
-export const CenterButton = styled.div`
-  text-align: center;
 `;

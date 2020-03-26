@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, H1, Span, RedirectContainer, P, LinkTo } from 'components/atoms/FormAtoms';
+import { Input, Button, H1, Span, P, LinkTo, RedirectContainer } from 'components/atoms/FormAtoms';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
@@ -48,6 +48,7 @@ class Form extends Component {
         { error: 'Your email is incorrect', active: false },
         { error: 'Password has to be uniqe', active: false },
         { error: 'Login or password is incorect', active: false },
+        { error: 'Failed to connect to server', active: false },
       ],
       req: {},
     };
@@ -57,24 +58,24 @@ class Form extends Component {
     event.preventDefault();
     const { req } = this.state;
     const request = JSON.stringify(req);
-    const { handleSuccessfulAuth, history } = this.props;
-
-    return Axios.post('/.netlify/functions/routes/auth', request, { headers: { 'Content-Type': 'application/json' } })
-      .then(resp => {
-        const token = resp.headers['x-auth-token'];
-        handleSuccessfulAuth(token, resp.name);
-        history.push('/');
-      })
-      .catch(err => {
-        const error = err.response.status === 404 ? 'Nie udało połączyć się z serwerem, spróbuj ponownie za chwilę.' : err.response.data;
-        this.setState({
-          error,
-        });
-      });
+    const { handleSuccessfulAuth, history, type } = this.props;
+    const URL = type === 'LOGIN' ? '/.netlify/functions/routes/auth' : '/.netlify/functions/routes/users';
+    return (
+      !this.validateHandler() &&
+      Axios.post(URL, request, { headers: { 'Content-Type': 'application/json' } })
+        .then(resp => {
+          const token = resp.headers['x-auth-token'];
+          handleSuccessfulAuth(token, resp.name);
+          history.push('/');
+        })
+        .catch(err => {
+          this.validateHandler(null, err.response.status);
+        })
+    );
   };
 
-  validateHandler = event => {
-    const { target, type } = event;
+  validateHandler = (event, status) => {
+    const { target, type } = event || { target: null, type: 'submit' };
     const { req } = this.state;
     let { error } = this.state;
     error = [...error];
@@ -83,17 +84,24 @@ class Form extends Component {
       error[1].active = target.name === 'password' && target.value.length < 5 ? true : error[1].active;
       error[2].active = target.name === 'email' && !new RegExp(/^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/).test(target.value) ? true : error[2].active;
       error[3].active = req.password !== undefined && (req.name === req.password || req.email === req.password) ? true : error[3].active;
-    } else {
+    } else if (type === 'focus') {
       error[0].active = target.name === 'name' ? false : error[0].active;
       error[1].active = target.name === 'password' ? false : error[1].active;
       error[2].active = target.name === 'email' ? false : error[2].active;
       error[3].active = false;
       error[4].active = false;
+      error[5].active = false;
+    } else if (type === 'submit' && status) {
+      error[4].active = status === 400 ? true : error[4].active;
+      error[5].active = status === 404 || status === 500 ? true : error[5].active;
+    } else {
+      const SubmitBreaker = error.find(err => err.active === true) || !req.name || !req.password;
+      return SubmitBreaker;
     }
-    console.log(req.password === req.name);
     this.setState({
       error,
     });
+    return null;
   };
 
   changeHandler = event => {
