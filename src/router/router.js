@@ -6,7 +6,7 @@ import axios from 'axios';
 import GlobalStyle from 'theme/GlobalStyle';
 import Loader from 'pages/Loader';
 import Home from 'pages/Home';
-import Form2 from 'components/molecules/Form';
+import Form from 'components/molecules/Form';
 
 const theme = { primary: 'red' };
 
@@ -67,8 +67,8 @@ export default class AppRouter extends React.Component {
         <ThemeProvider theme={theme}>
           <Router>
             <PrivateRoute exact path="/" render={props => <Home {...props} />} secure={secure} secureRoute={this.checkLoginStatus} />
-            <Route path="/register" render={props => <Form2 {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} type="REGISTER" />} />
-            <Route path="/login" render={props => <Form2 {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} type="LOGIN" />} />
+            <Route path="/register" render={props => <Form {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} type="REGISTER" />} />
+            <Route path="/login" render={props => <Form {...props} handleSuccessfulAuth={this.handleSuccessfulAuth} type="LOGIN" />} />
           </Router>
         </ThemeProvider>
       </>
