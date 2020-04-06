@@ -11,7 +11,7 @@ import Form from 'components/molecules/Form';
 const theme = { primary: 'red' };
 
 const PrivateRoute = ({ render, secureRoute, secure: { isLoaded, loggedInStatus }, ...rest }) => {
-  const renderFun = isLoaded ? render : () => <Loader secureRoute={secureRoute} />;
+  const renderFun = isLoaded ? render : props => <Loader secureRoute={secureRoute} {...props} />;
   const RouteElement = !loggedInStatus && isLoaded ? <Redirect to="./login" /> : <Route {...rest} render={renderFun} />;
   return RouteElement;
 };
