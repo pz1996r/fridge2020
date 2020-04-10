@@ -79,14 +79,13 @@ class Form extends Component {
           history.push('/');
         })
         .catch(err => {
-          console.log(err.response.data);
           this.validateHandler(null, err.response.status, err.response.data);
           this.requestHandler(false);
         })
     );
   };
 
-  validateHandler = (event, status) => {
+  validateHandler = (event, status, er) => {
     const { target, type } = event || { target: null, type: 'submit' };
     const { req } = this.state;
     let { error } = this.state;
@@ -104,6 +103,7 @@ class Form extends Component {
       error[4].active = false;
       error[5].active = false;
     } else if (type === 'submit' && status) {
+      error[4].error = status === 400 ? er : error[4].error;
       error[4].active = status === 400 ? true : error[4].active;
       error[5].active = status === 404 || status === 500 ? true : error[5].active;
     } else {
