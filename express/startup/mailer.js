@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 
 dotenv.config();
 
-module.exports = function sendEmail(email, name, emailToken) {
+module.exports = async function sendEmail(email, name, emailToken) {
     const { SFTP, SFTPPassword, host } = process.env;
     const transporter = nodemailer.createTransport({
         host,
@@ -14,7 +14,7 @@ module.exports = function sendEmail(email, name, emailToken) {
             pass: SFTPPassword
         }
     });
-    transporter.sendMail({
+    const info = await transporter.sendMail({
         from: '"piotr@fridge.develoopers.pl 👻" <piotr@fridge.develoopers.pl>',
         to: email,
         subject: "Fridge APP - Potwierdź email",
@@ -22,4 +22,7 @@ module.exports = function sendEmail(email, name, emailToken) {
                <p>Dziękujemy za zarejestrowanie konta. Zanim zaczniesz z niego korzystać musimy potwierdzić, że to Ty. Kliknij poniżej, aby zweryfikować swój adres e-mail: </p>
                <button href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}">Potwierdź e-mail:<button>`
     });
+
+    console.log("Message sent: %s", info.messageId);
+    return info;
 }
