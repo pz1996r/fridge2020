@@ -1,12 +1,9 @@
-// local ******************************************************************************************************
 const dotenv = require('dotenv');
-
-dotenv.config();
-// end local ****************************************************************************************************
 const jwt = require('jsonwebtoken');
-// const config = require('config');
 const Joi = require('joi');
 const mongoose = require('mongoose');
+
+dotenv.config();
 
 const { jwtPrivateKey } = process.env;
 
@@ -33,7 +30,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.methods.generateAuthToken = function() {
+userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, jwtPrivateKey);
   return token;
 };
