@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 dotenv.config();
 
-const { jwtPrivateKey } = process.env;
+const { jwtPrivateKey, jwtEmailKey } = process.env;
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -28,10 +28,18 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 1024,
   },
+  emailVerified: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, jwtPrivateKey);
+  return token;
+};
+userSchema.methods.generateEmailToken = function () {
+  const token = jwt.sign({ id: this._id }, jwtEmailKey, { expiresIn: '1d' });
   return token;
 };
 
@@ -53,7 +61,6 @@ function validateUser(user) {
       .max(255)
       .required(),
   };
-
   return Joi.validate(user, schema);
 }
 
