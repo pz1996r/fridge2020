@@ -1,20 +1,20 @@
-// local **************************************************************
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
 dotenv.config();
-// end local ******************************************************************
-const mongoose = require('mongoose');
-// const config = require("config");
 
-module.exports = function() {
-  // const db = config.get("db");
-
+module.exports = function () {
   const { db } = process.env;
   mongoose.set('useCreateIndex', true);
   mongoose
     .connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      keepAlive: 6600000,
+      connectTimeoutMS: 6600000,
+      socketTimeoutMS: 6600000,
+      useMongoClient: true,
+      promiseLibrary: global.Promise
     })
     .then(() => console.log(`Connected to ${db}...`))
     .catch(err => console.error(err));
