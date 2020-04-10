@@ -7,6 +7,7 @@ const sendEmail = require('../startup/mailer');
 const { router } = api;
 
 router.post('/users', async (req, res) => {
+
   const { error } = validate(req.body);
   if (error) return res.status(400).send(JSON.stringify(error.details[0].message));
   let user = await User.findOne({ email: req.body.email });
@@ -20,10 +21,13 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
-  sendEmail(req.body.email, req.body.name, emailToken).catch((err) => { console.log(`${err}sth wrong`) });
+  sendEmail(req.body.email, req.body.name, emailToken)
+    .then(() => { console.log('wyslano') })
+    .catch((err) => { console.log(`${err}sth wrong`) });
 
   // const token = user.generateAuthToken();
   // wysłać maila :D
+  console.log('ocb???');
   return res.status(200).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
