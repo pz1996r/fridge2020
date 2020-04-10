@@ -103,8 +103,8 @@ class Form extends Component {
       error[4].active = false;
       error[5].active = false;
     } else if (type === 'submit' && status) {
-      // console.log(resp);
-      error[4].error = status === 400 ? resp : error[4].error;
+      console.log(resp);
+      // error[4].error = status === 400 ? resp : error[4].error;
       error[4].active = status === 400 ? true : error[4].active;
       error[5].active = status === 404 || status === 500 ? true : error[5].active;
     } else {
