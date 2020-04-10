@@ -32,11 +32,13 @@ router.post('/auth', async (req, res) => {
   if (!validPassword) return res.status(400).send(JSON.stringify('Invalid email or password.'));
 
   const token = user.generateAuthToken();
-  // najlepiej by było wysyłać token w headerze natomiast jako body proponował bym login usera ...
-  // console.log(user);
-  res.header('x-auth-token', token).send(_.pick(user, ['name', 'email']));
+  if (token === undefined) {
+    return res.status(404).send(JSON.stringify({ ...req, user }));
+  }
+  console.log(user, token, req);
+  return res.header('x-auth-token', token).send(_.pick(user, ['name', 'email']));
+
   // res.send(JSON.stringify(token));
-  return null;
 });
 
 module.exports = router;
