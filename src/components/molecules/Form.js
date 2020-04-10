@@ -79,6 +79,7 @@ class Form extends Component {
           history.push('/');
         })
         .catch(err => {
+          console.log(err.response);
           this.validateHandler(null, err.response.status);
           this.requestHandler(false);
         })
