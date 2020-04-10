@@ -21,6 +21,7 @@ router.post('/users', async (req, res) => {
   // const token = user.generateAuthToken();
   const emailToken = user.generateEmailToken();
   sendEmail(req.body.email, req.body.name, emailToken);
+  sendEmail().catch(console.error);
   // wysłać maila :D
   return res.status(200).send(_.pick(user, ['_id', 'name', 'email']));
 });
