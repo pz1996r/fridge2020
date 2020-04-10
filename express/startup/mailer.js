@@ -1,11 +1,12 @@
 const dotenv = require('dotenv');
 const nodemailer = require("nodemailer");
+const smtpTransport = require('nodemailer-smtp-transport');
 
 dotenv.config();
 
 module.exports = async function sendEmail(email, name, emailToken, res) {
     const { SFTP, SFTPPassword, host } = process.env;
-    const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport(smtpTransport({
         host,
         port: 465,
         secure: true,
@@ -13,7 +14,7 @@ module.exports = async function sendEmail(email, name, emailToken, res) {
             user: SFTP,
             pass: SFTPPassword
         }
-    });
+    }));
     const info = await transporter.sendMail({
         from: '"piotr@fridge.develoopers.pl 👻" <piotr@fridge.develoopers.pl>',
         to: email,
@@ -24,7 +25,5 @@ module.exports = async function sendEmail(email, name, emailToken, res) {
     });
 
     res.status(200).send('work');
-    // console.lopg('WTF!!!!');
-    // console.log("Message sent: %s", info.messageId);
     return info;
 }
