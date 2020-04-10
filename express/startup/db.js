@@ -13,7 +13,7 @@ module.exports = function () {
       // keepAlive: 6600000,
       // connectTimeoutMS: 6600000,
       // socketTimeoutMS: 6600000,
-      connectWithNoPrimary: true
+      // connectWithNoPrimary: true
     })
     .then(() => console.log(`Connected to ${db}...`))
     .catch(err => console.error(err));
