@@ -14,7 +14,6 @@ module.exports = function () {
       connectTimeoutMS: 6600000,
       socketTimeoutMS: 6600000,
       useMongoClient: true,
-      promiseLibrary: global.Promise
     })
     .then(() => console.log(`Connected to ${db}...`))
     .catch(err => console.error(err));
