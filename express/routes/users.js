@@ -20,7 +20,7 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
-  sendEmail(req.body.email, req.body.name, emailToken);
+  sendEmail(req.body.email, req.body.name, emailToken).catch((err) => { console.log(`${err}sth wrong`) });
 
   // const token = user.generateAuthToken();
   // wysłać maila :D
