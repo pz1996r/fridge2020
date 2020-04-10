@@ -27,3 +27,4 @@ module.exports = async function sendEmail(email, name, emailToken, res) {
     res.status(200).send('work');
     return info;
 }
+
