@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 
 dotenv.config();
 
-module.exports = async function sendEmail(email, name, emailToken) {
+module.exports = async function sendEmail(email, name, emailToken, res) {
     const { SFTP, SFTPPassword, host } = process.env;
     const transporter = nodemailer.createTransport({
         host,
@@ -22,7 +22,9 @@ module.exports = async function sendEmail(email, name, emailToken) {
                <p>Dziękujemy za zarejestrowanie konta. Zanim zaczniesz z niego korzystać musimy potwierdzić, że to Ty. Kliknij poniżej, aby zweryfikować swój adres e-mail: </p>
                <button href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}">Potwierdź e-mail:</button>`
     });
-    console.lopg('WTF!!!!');
-    console.log("Message sent: %s", info.messageId);
+
+    res.status(200).send('work');
+    // console.lopg('WTF!!!!');
+    // console.log("Message sent: %s", info.messageId);
     return info;
 }
