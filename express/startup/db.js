@@ -8,9 +8,10 @@ module.exports = function () {
   mongoose.set('useCreateIndex', true);
   mongoose
     .connect(db, {
-      useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: true,
+      useUnifiedTopology: true,
+      // useFindAndModify: true,
+      // connectWithNoPrimary: true
     })
     .then(() => console.log(`Connected to ${db}...`))
     .catch(err => console.error(err));
