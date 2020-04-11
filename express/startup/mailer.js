@@ -16,7 +16,7 @@ module.exports = async function sendEmail(email, name, emailToken, res) {
         }
     }));
     const info = await transporter.sendMail({
-        from: `"piotr@fridge.develoopers.pl 👻" <${SFTP}>`,
+        from: `"Firdge APP 👻" <${SFTP}>`,
         to: email,
         subject: "Fridge APP - Potwierdź email",
         html: `<h1>Witaj ${name} !<h1>
