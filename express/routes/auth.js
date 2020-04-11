@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const { User } = require('../models/user');
 const api = require('../routes.js');
+const mongoConnection = require('../startup/db');
 
 const { router } = api;
 
@@ -21,7 +22,10 @@ function validate(req) {
 }
 
 router.post('/auth', async (req, res) => {
+
   console.log('test auth work');
+  mongoConnection();
+  console.log('aftertest');
   const { error } = validate(req.body);
   if (error) return res.status(400).send(JSON.stringify(error.details[0].message));
 
