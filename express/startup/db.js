@@ -10,7 +10,6 @@ module.exports = function () {
     .connect(db, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      // connectWithNoPrimary: true
     })
     .then(() => console.log(`Connected to ${db}...`))
     .catch(err => console.error(err));
