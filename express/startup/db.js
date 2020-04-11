@@ -6,10 +6,12 @@ dotenv.config();
 module.exports = function () {
   const { db } = process.env;
   mongoose.set('useCreateIndex', true);
+  mongoose.set('useNewUrlParser', true);
+  mongoose.set('useUnifiedTopology', true);
   mongoose
     .connect(db, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
       // useFindAndModify: true,
       // connectWithNoPrimary: true
     })
