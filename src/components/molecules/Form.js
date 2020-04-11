@@ -121,7 +121,7 @@ class Form extends Component {
   changeHandler = event => {
     const { value, name } = event.target;
     let { req } = this.state;
-    const reg = { email: new RegExp(/[a-zA-Z0-9_@.]/), name: new RegExp(/[a-zA-Z0-9]/), password: new RegExp(/[a-zA-Z0-9_!@#()*_+?.]/) };
+    const reg = { email: new RegExp(/[a-zA-Z0-9_@.-]/), name: new RegExp(/[a-zA-Z0-9]/), password: new RegExp(/[a-zA-Z0-9_!@#()*_+?.]/) };
     const clearInput = value
       .split('')
       .filter(sign => reg[name].test(sign))
