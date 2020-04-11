@@ -21,6 +21,7 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
+  // 
   return sendEmail(req.body.email, req.body.name, emailToken, res)
 
 });

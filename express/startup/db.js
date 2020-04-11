@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 
 dotenv.config();
 
-module.exports = function () {
+module.exports = function connectDB() {
+  console.log('trying to run mongo');
   const { db } = process.env;
-  mongoose.set('useCreateIndex', true);
   mongoose
     .connect(db, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // connectWithNoPrimary: true
+      // useUnifiedTopology: true,
+      useCreateIndex: true,
     })
     .then(() => console.log(`Connected to ${db}...`))
-    .catch(err => console.error(err));
+    .catch(err => { connectDB(); console.error(err) });
 };
