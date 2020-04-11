@@ -45,7 +45,7 @@ class Form extends Component {
       error: [
         { error: 'Login must be at least 5 characters', active: false },
         { error: 'Password must be at least 5 characters', active: false },
-        { error: 'Your email is incorrect', active: false },
+        { error: 'Your email is incorrect.', active: false },
         { error: 'Password has to be uniqe', active: false },
         { error: 'Login or password is incorect', active: false },
         { error: 'Failed to connect to server', active: false },
