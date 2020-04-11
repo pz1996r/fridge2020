@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 dotenv.config();
 
 module.exports = function () {
+  console.log('trying to run mongo');
   const { db } = process.env;
   mongoose.set('useCreateIndex', true);
   mongoose.set('useNewUrlParser', true);
