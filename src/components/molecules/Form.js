@@ -93,7 +93,7 @@ class Form extends Component {
     if (type === 'blur') {
       error[0].active = target.name === 'name' && target.value.length < 5 ? true : error[0].active;
       error[1].active = target.name === 'password' && target.value.length < 5 ? true : error[1].active;
-      error[2].active = target.name === 'email' && !new RegExp(/^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/).test(target.value) ? true : error[2].active;
+      error[2].active = target.name === 'email' ? true : error[2].active;
       error[3].active = req.password !== undefined && (req.name === req.password || req.email === req.password) ? true : error[3].active;
     } else if (type === 'focus') {
       error[0].active = target.name === 'name' ? false : error[0].active;
