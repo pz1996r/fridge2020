@@ -25,9 +25,11 @@ router.get('/verify/:token', async (req, res) => {
 
 router.post('/verify/:token', async (req, res) => {
     // console.log(req.headers['x-forwarded-host'] + req.baseUrl);
+    console.log('trying to verify');
     try {
         const { id } = jwt.verify(req.params.token, jwtEmailKey);
         await User.updateOne({ _id: id }, { emailVerified: true });
+        res.redirect('/login');
     } catch (err) {
         res.send('error');
     }
