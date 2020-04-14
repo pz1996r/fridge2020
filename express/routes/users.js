@@ -23,16 +23,8 @@ router.post('/users', async (req, res) => {
   const emailToken = user.generateEmailToken();
   const verificationToken = user.generateVerificationToken();
   const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
-  console.log('work ???')
-  sendEmail(req.body.email, req.body.name, link)
-  // .then(
-  //   res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']))
-  // )
-  // .catch(
-  //   ()=>{
-  //     res.status(400).send(JSON.stringify('Problem with mailing'))
-  //   }
-  // )
+  sendEmail(req.body.email, req.body.name, link);
+  res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']));
 });
 
 module.exports = router;
