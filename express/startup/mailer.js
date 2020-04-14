@@ -5,9 +5,7 @@ const smtpTransport = require('nodemailer-smtp-transport');
 dotenv.config();
 
 module.exports = async function sendEmail(email, name, link) {
-    console.log('work 1 ???')
     const { SFTP, SFTPPassword, host } = process.env;
-    console.log('work 2 ???')
     const transporter = nodemailer.createTransport(smtpTransport({
         host,
         port: 465,
@@ -17,8 +15,6 @@ module.exports = async function sendEmail(email, name, link) {
             pass: SFTPPassword
         }
     }));
-    console.log('work 3 ???')
-    console.log(email, name, SFTP,SFTPPassword, host);
     const info = await transporter.sendMail({
         from: `"Firdge APP 👻" <${SFTP}>`,
         to: email,
@@ -29,5 +25,5 @@ module.exports = async function sendEmail(email, name, link) {
                </html>`,
         text: "Dziękujemy za zarejestrowanie konta. Zanim zaczniesz z niego korzystać musimy potwierdzić, że to Ty. Kliknij poniżej, aby zweryfikować swój adres e-mail", // plain text body
     });
-    console.log('work 4 ???')
+    console.log(info);
 }
