@@ -5,14 +5,40 @@ const api = require('../routes.js');
 const { jwtEmailKey } = process.env;
 const { router } = api;
 
-router.post('/verify/:token', async (req, res) => {
+router.get('/verify/:token', async (req, res) => {
+    // console.log(req);
+    // console.log(req.headers['x-forwarded-host'] + req.baseUrl);
+    // res.json({
+    //     'hello': 'ddd',
+    // })
     try {
         const { id } = jwt.verify(req.params.token, jwtEmailKey);
-        await User.update({ confirmed: true }, { where: { _id: id } });
+        console.log('work', id);
+        // await User.update({ emailVerified: true }, { where: { _id: id } });
+        await User.updateOne({ _id: id }, { emailVerified: true });
     } catch (err) {
         res.send('error');
     }
-    return res.redirect('/');
+    console.log('testy')
+    // return res.redirect('/');
+});
+
+router.post('/verify/:token', async (req, res) => {
+    // console.log(req);
+    // console.log(req.headers['x-forwarded-host'] + req.baseUrl);
+    // res.json({
+    //     'hello': 'ddd',
+    // })
+    try {
+        const { id } = jwt.verify(req.params.token, jwtEmailKey);
+        // console.log('work', id);
+        // await User.update({ emailVerified: true }, { where: { _id: id } });
+        await User.updateOne({ _id: id }, { emailVerified: true });
+    } catch (err) {
+        res.send('error');
+    }
+    // console.log('testy')
+    // return res.redirect('/');
 });
 
 module.exports = router;
