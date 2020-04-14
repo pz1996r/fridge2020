@@ -23,7 +23,9 @@ router.post('/users', async (req, res) => {
   const emailToken = user.generateEmailToken();
   const verificationToken = user.generateVerificationToken();
   const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
+  console.log('work ???')
   sendEmail(req.body.email, req.body.name, link)
+  console.log('work 5 ???')
   return res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']));
 });
 
