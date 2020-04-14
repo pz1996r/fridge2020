@@ -34,8 +34,12 @@ const StyledError = styled.p`
 
 const StyledForm = styled.form`
   text-align: center;
-  margin: 0 auto;
+  margin: 0 auto 6px auto;
   max-width: 270px;
+
+  overflow: hidden;
+  transition: 0.8s 0.3s linear;
+  max-height: ${({ visible }) => (visible ? '600px' : '0')};
 `;
 
 class Form extends Component {
@@ -49,6 +53,7 @@ class Form extends Component {
         { error: 'Password has to be uniqe', active: false },
         { error: 'Login or password is incorect', active: false },
         { error: 'Failed to connect to server', active: false },
+        { error: 'Check mailbox and confirm your e-mail', active: false },
       ],
       req: {},
       requesting: false,
@@ -60,6 +65,17 @@ class Form extends Component {
       requesting: bolean,
     });
     return true;
+  };
+
+  resendEmail = async () => {
+    const URL = '/.netlify/functions/routes/verify';
+    Axios.post(URL, {}, { headers: { 'Content-Type': 'application/json', 'x-verification-token': localStorage.getItem('x-verification-token') } })
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   submitHandler = async event => {
@@ -75,8 +91,14 @@ class Form extends Component {
         .then(resp => {
           this.requestHandler(false);
           const token = resp.headers['x-auth-token'];
-          handleSuccessfulAuth(token, resp.name);
-          history.push('/');
+          const verificationToken = resp.headers['x-verification-token'];
+          if (token !== undefined) {
+            handleSuccessfulAuth(token, resp.name, resp.email);
+            history.push('/');
+          } else if (verificationToken !== undefined) {
+            this.validateHandler(null, resp.status);
+            localStorage.setItem('x-verification-token', verificationToken);
+          }
         })
         .catch(err => {
           this.validateHandler(null, err.response.status, err.response.data);
@@ -93,7 +115,7 @@ class Form extends Component {
     if (type === 'blur') {
       error[0].active = target.name === 'name' && target.value.length < 5 ? true : error[0].active;
       error[1].active = target.name === 'password' && target.value.length < 5 ? true : error[1].active;
-      error[2].active = target.name === 'email' && !new RegExp(/^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/).test(target.value) ? error[2].active : error[2].active;
+      error[2].active = target.name === 'email' && !new RegExp(/^([a-z\d.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/).test(target.value) ? true : error[2].active;
       error[3].active = req.password !== undefined && (req.name === req.password || req.email === req.password) ? true : error[3].active;
     } else if (type === 'focus') {
       error[0].active = target.name === 'name' ? false : error[0].active;
@@ -106,6 +128,7 @@ class Form extends Component {
       error[4].error = status === 400 ? er : error[4].error;
       error[4].active = status === 400 ? true : error[4].active;
       error[5].active = status === 404 || status === 500 ? true : error[5].active;
+      error[6].active = status === 200 ? true : error[6].active;
     } else {
       error[0].active = !req.name ? true : error[0].active;
       error[1].active = !req.password ? true : error[1].active;
@@ -134,7 +157,7 @@ class Form extends Component {
   render() {
     const { error, req, requesting } = this.state;
     const { type } = this.props;
-    const { submitHandler, changeHandler, validateHandler } = this;
+    const { submitHandler, changeHandler, validateHandler, resendEmail } = this;
     return (
       <StyledWrapper>
         <StyledFromWrapper>
@@ -154,12 +177,17 @@ class Form extends Component {
               </StyledError>
             ))}
           </StyledErrorWrapper>
-          <StyledForm onSubmit={submitHandler} autoComplete="new-password">
+          <StyledForm onSubmit={submitHandler} autoComplete="new-password" visible={!error[6].active}>
             {type === 'LOGIN' ? null : <Input placeholder="EMAIL" type="text" autoComplete="new-password" name="email" value={req.email || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />}
             <Input placeholder="LOGIN" type="text" name="name" value={req.name || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />
             <Input placeholder="PASSWORD" type="password" name="password" value={req.password || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />
             <Button requesting={requesting}>{type === 'LOGIN' ? 'Login' : 'Register'}</Button>
           </StyledForm>
+          {error[6].active && (
+            <Button onClick={resendEmail} requesting={requesting}>
+              SEND VERIFICATION LINK AGAIN
+            </Button>
+          )}
           <RedirectContainer>
             {type === 'LOGIN' ? (
               <>

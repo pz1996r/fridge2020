@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 dotenv.config();
 
-const { jwtPrivateKey, jwtEmailKey } = process.env;
+const { jwtPrivateKey, jwtEmailKey, jwtVerificationKey } = process.env;
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -40,6 +40,11 @@ userSchema.methods.generateAuthToken = function () {
 };
 userSchema.methods.generateEmailToken = function () {
   const token = jwt.sign({ id: this._id }, jwtEmailKey, { expiresIn: '1d' });
+  return token;
+};
+
+userSchema.methods.generateVerificationToken = function () {
+  const token = jwt.sign({ id: this._id }, jwtVerificationKey, { expiresIn: '1d' });
   return token;
 };
 
