@@ -21,7 +21,7 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
-  console.log(`${req.headers['x-forwarded-host'] + req.baseUrl}/verify/${emailToken}`);
+  console.log(`${req.headers.origin + req.baseUrl}/verify/${emailToken}`);
   console.log(req);
   return null;
   // 
