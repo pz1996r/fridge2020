@@ -7,6 +7,7 @@ dotenv.config();
 module.exports = async function sendEmail(email, name, link) {
     console.log('work 1 ???')
     const { SFTP, SFTPPassword, host } = process.env;
+    console.log('work 2 ???')
     const transporter = nodemailer.createTransport(smtpTransport({
         host,
         port: 465,
@@ -16,6 +17,7 @@ module.exports = async function sendEmail(email, name, link) {
             pass: SFTPPassword
         }
     }));
+    console.log('work 3 ???')
     const info = await transporter.sendMail({
         from: `"Firdge APP 👻" <${SFTP}>`,
         to: email,
@@ -27,7 +29,7 @@ module.exports = async function sendEmail(email, name, link) {
         text: "Dziękujemy za zarejestrowanie konta. Zanim zaczniesz z niego korzystać musimy potwierdzić, że to Ty. Kliknij poniżej, aby zweryfikować swój adres e-mail", // plain text body
 
     });
-    console.log('work ???')
+    console.log('work 4 ???')
     //    <button href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}">Potwierdź e-mail</button>
     //    <a href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}>Potwierdź e-mail</a>
     return info;
