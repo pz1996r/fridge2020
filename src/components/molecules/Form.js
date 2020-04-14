@@ -61,21 +61,29 @@ class Form extends Component {
   }
 
   requestHandler = bolean => {
-    this.setState({
-      requesting: bolean,
-    });
-    return true;
+    const { requesting } = this.state;
+    if (requesting !== bolean) {
+      this.setState({
+        requesting: bolean,
+      });
+    }
+    return requesting !== bolean;
   };
 
   resendEmail = async () => {
     const URL = '/.netlify/functions/routes/verify';
-    Axios.post(URL, {}, { headers: { 'Content-Type': 'application/json', 'x-verification-token': localStorage.getItem('x-verification-token') } })
-      .then(resp => {
-        console.log(resp);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (this.requestHandler(true)) {
+      Axios.post(URL, {}, { headers: { 'Content-Type': 'application/json', 'x-verification-token': localStorage.getItem('x-verification-token') } })
+        .then(resp => {
+          this.setState(prevState => ({
+            error: [...prevState.error.slice(0, -1), { error: resp.data, active: true }],
+          }));
+          this.requestHandler(false);
+        })
+        .catch(() => {
+          this.requestHandler(false);
+        });
+    }
   };
 
   submitHandler = async event => {
