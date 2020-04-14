@@ -30,7 +30,4 @@ module.exports = async function sendEmail(email, name, link) {
 
     });
     console.log('work 4 ???')
-    //    <button href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}">Potwierdź e-mail</button>
-    //    <a href="https://fridge.develoopers.pl/.netlify/functions/routes/verify/${emailToken}>Potwierdź e-mail</a>
-    return info;
 }
