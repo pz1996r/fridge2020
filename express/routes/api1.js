@@ -3,7 +3,7 @@ const api = require('../routes.js')
 const { router } = api;
 
 router.get('/api1', async (req, res) => {
-    res.json({
+    return res.json({
         'hello': 'api'
     })
 })

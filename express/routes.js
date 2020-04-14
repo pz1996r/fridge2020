@@ -29,6 +29,7 @@ require('./routes/products');
 require('./routes/recipes');
 require('./routes/shoppingList');
 require('./routes/users');
+require('./routes/verify');
 
 // app.use(error);
 app.use(express.json());

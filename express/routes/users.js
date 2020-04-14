@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const { User, validate } = require('../models/user');
 const api = require('../routes.js');
-const sendEmail = require('../startup/mailer');
+// const sendEmail = require('../startup/mailer');
 
 const { router } = api;
 
@@ -21,8 +21,10 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
+  console.log(`${req.headers['x-forwarded-host'] + req.baseUrl}/verify/${emailToken}`);
+  return null;
   // 
-  return sendEmail(req.body.email, req.body.name, emailToken, res)
+  // return sendEmail(req.body.email, req.body.name, emailToken, res)
 
 });
 
