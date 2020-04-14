@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const { User, validate } = require('../models/user');
 const api = require('../routes.js');
-// const sendEmail = require('../startup/mailer');
+const sendEmail = require('../startup/mailer');
 
 const { router } = api;
 
@@ -21,12 +21,10 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
-  console.log(`${req.headers.origin + req.baseUrl}/verify/${emailToken}`);
-  console.log(req);
-  return null;
-  // 
-  // return sendEmail(req.body.email, req.body.name, emailToken, res)
-
+  const verificationToken = user.generateVerificationToken();
+  const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
+  sendEmail(req.body.email, req.body.name, link)
+  return res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']));
 });
 
 module.exports = router;
