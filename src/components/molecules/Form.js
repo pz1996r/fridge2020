@@ -32,6 +32,16 @@ const StyledError = styled.p`
   max-height: ${({ error }) => (error ? '40px' : '0')};
 `;
 
+const StyledResponse = styled.p`
+  font-size: 12px;
+  color: green;
+  margin: 0 0 10px 0;
+  transition: max-height 0.8s ease-out;
+  height: auto;
+  overflow: hidden;
+  max-height: ${({ error }) => (error ? '40px' : '0')};
+`;
+
 const StyledForm = styled.form`
   text-align: center;
   margin: 0 auto 6px auto;
@@ -39,7 +49,7 @@ const StyledForm = styled.form`
 
   overflow: hidden;
   transition: 0.8s 0.3s linear;
-  max-height: ${({ visible }) => (visible ? '600px' : '0')};
+  /* max-height: ${({ visible }) => (visible ? '600px' : '0')}; */
 `;
 
 class Form extends Component {
@@ -55,9 +65,24 @@ class Form extends Component {
         { error: 'Failed to connect to server', active: false },
         { error: 'Check mailbox and confirm your e-mail', active: false },
       ],
+      response: { resp: 'The link has been send, check you mailbox', active: false },
       req: {},
       requesting: false,
     };
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('x-verification-token') !== null && localStorage.getItem('x-verification-token') !== undefined) {
+      this.setState(({ error }) => ({
+        error: [
+          ...error.slice(0, -1),
+          {
+            error: error[error.length - 1].error,
+            active: true,
+          },
+        ],
+      }));
+    }
   }
 
   requestHandler = bolean => {
@@ -76,7 +101,8 @@ class Form extends Component {
       Axios.post(URL, {}, { headers: { 'Content-Type': 'application/json', 'x-verification-token': localStorage.getItem('x-verification-token') } })
         .then(resp => {
           this.setState(prevState => ({
-            error: [...prevState.error.slice(0, -1), { error: resp.data, active: true }],
+            error: [...prevState.error.slice(0, -1), { error: prevState.error[prevState.error.length - 1].error, active: false }],
+            response: { resp: resp.data, active: true },
           }));
           this.requestHandler(false);
         })
@@ -104,8 +130,12 @@ class Form extends Component {
             handleSuccessfulAuth(token, resp.name, resp.email);
             history.push('/');
           } else if (verificationToken !== undefined) {
-            this.validateHandler(null, resp.status);
             localStorage.setItem('x-verification-token', verificationToken);
+            if (type !== 'LOGIN') {
+              history.push('/login');
+            } else {
+              this.validateHandler(null, resp.status);
+            }
           }
         })
         .catch(err => {
@@ -132,6 +162,7 @@ class Form extends Component {
       error[3].active = false;
       error[4].active = false;
       error[5].active = false;
+      error[6].active = false;
     } else if (type === 'submit' && status) {
       error[4].error = status === 400 ? er : error[4].error;
       error[4].active = status === 400 ? true : error[4].active;
@@ -163,7 +194,7 @@ class Form extends Component {
   };
 
   render() {
-    const { error, req, requesting } = this.state;
+    const { error, req, requesting, response } = this.state;
     const { type } = this.props;
     const { submitHandler, changeHandler, validateHandler, resendEmail } = this;
     return (
@@ -178,6 +209,7 @@ class Form extends Component {
               <Span>Create</Span> your account
             </H1>
           )}
+          <StyledResponse error={response.active}>{response.resp}</StyledResponse>
           <StyledErrorWrapper className="form-error">
             {error.map(err => (
               <StyledError error={err.active} key={err.error}>
@@ -191,11 +223,11 @@ class Form extends Component {
             <Input placeholder="PASSWORD" type="password" name="password" value={req.password || ''} onChange={changeHandler} onBlur={validateHandler} onFocus={validateHandler} />
             <Button requesting={requesting}>{type === 'LOGIN' ? 'Login' : 'Register'}</Button>
           </StyledForm>
-          {error[6].active && (
-            <Button onClick={resendEmail} requesting={requesting}>
-              SEND VERIFICATION LINK AGAIN
-            </Button>
-          )}
+
+          <Button onClick={resendEmail} requesting={requesting} hide={!error[6].active}>
+            SEND VERIFICATION LINK AGAIN
+          </Button>
+
           <RedirectContainer>
             {type === 'LOGIN' ? (
               <>
