@@ -21,9 +21,10 @@ router.post('/users', async (req, res) => {
   await user.save();
 
   const emailToken = user.generateEmailToken();
-  // 
-  return sendEmail(req.body.email, req.body.name, emailToken, res)
-
+  const verificationToken = user.generateVerificationToken();
+  const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
+  sendEmail(req.body.email, req.body.name, link);
+  res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']));
 });
 
 module.exports = router;

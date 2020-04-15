@@ -21,21 +21,25 @@ function validate(req) {
 }
 
 router.post('/auth', async (req, res) => {
-  console.log('test auth work');
   const { error } = validate(req.body);
   if (error) return res.status(400).send(JSON.stringify(error.details[0].message));
 
   const user = await User.findOne({ name: req.body.name });
-  if (!user) return res.status(400).send(JSON.stringify('Invalid email or password.'));
+  if (!user) return res.status(400).send(JSON.stringify('Invalid login or password.'));
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validPassword) return res.status(400).send(JSON.stringify('Invalid email or password.'));
+  if (!validPassword) return res.status(400).send(JSON.stringify('Invalid login or password.'));
 
   const token = await user.generateAuthToken();
   if (token === undefined) {
     return res.status(404).send(JSON.stringify('Server Connection problem'));
   }
-  console.log(user, token, req);
+
+  if (user.emailVerified === false) {
+    const verificationToken = await user.generateVerificationToken();
+    return res.header('x-verification-token', verificationToken).send(_.pick(user, ['name', 'email']));
+  }
+
   return res.header('x-auth-token', token).send(_.pick(user, ['name', 'email']));
 });
 

@@ -26,9 +26,13 @@ export const Button = styled.button`
   border-radius: 0.125rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  padding: 0.84rem 2.14rem;
+  padding: 0 2.14rem;
   font-size: 0.81rem;
   background-color: ${({ requesting }) => (requesting ? '#787878' : '#3f51b5')};
+  max-height: ${({ hide }) => (hide ? 0 : '2.84rem')};
+  height: 2.84rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
 
   &:hover {
     outline: 0;
