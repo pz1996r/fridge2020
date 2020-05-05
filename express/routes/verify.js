@@ -20,7 +20,7 @@ router.post('/verify', async (req, res) => {
     const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
     sendEmail(user.email, user.name, link)
         .then(() => { return res.send('The link has been send, check you mailbox') })
-        .catch(() => { return res.status(400).send('Try send email again.') })
+        .catch((err) => { console.log(err); return res.status(400).send('Try send email again.') })
 
 });
 
