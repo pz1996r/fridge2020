@@ -9,17 +9,18 @@ const { router } = api;
 
 router.post('/verify', async (req, res) => {
     const token = req.header('x-verification-token');
+    console.log('token:', token);
     if (!token) return res.status(401).send('Access denied. No token provided.');
     const { id } = jwt.verify(token, jwtVerificationKey);
-    if (!id) return res.status(404).send('Invalid token.');
+    if (!id) return res.status(401).send('Invalid token.');
     const user = await User.findOne({ _id: id });
-    if (!user) return res.status(404).send('Invalid token.');
+    if (!user) return res.status(401).send('Invalid token.');
 
     const emailToken = user.generateEmailToken();
     const link = `${req.headers.origin + req.baseUrl}/verify/${emailToken}`;
     sendEmail(user.email, user.name, link)
         .then(() => { return res.send('The link has been send, check you mailbox') })
-        .catch(() => { return res.status(404).send('Try send email again.') })
+        .catch(() => { return res.status(400).send('Try send email again.') })
 
 });
 
