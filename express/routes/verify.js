@@ -9,7 +9,6 @@ const { router } = api;
 
 router.post('/verify', async (req, res) => {
     const token = req.header('x-verification-token');
-    console.log('token:', token);
     if (!token) return res.status(401).send('Access denied. No token provided.');
     const { id } = jwt.verify(token, jwtVerificationKey);
     if (!id) return res.status(401).send('Invalid token.');
