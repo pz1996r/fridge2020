@@ -7,7 +7,7 @@ const sendEmail = require('../startup/mailer');
 const { jwtEmailKey, jwtVerificationKey } = process.env;
 const { router } = api;
 
-router.post('/verify', async (req, res) => {
+router.post('/verifytest', async (req, res) => {
     const token = req.header('x-verification-token');
     if (!token) return res.status(401).send('Access denied. No token provided.');
     const { id } = jwt.verify(token, jwtVerificationKey);
