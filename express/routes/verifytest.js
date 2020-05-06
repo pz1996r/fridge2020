@@ -23,7 +23,7 @@ router.post('/verifytest', async (req, res) => {
 
 });
 
-router.get('/verify/:token', async (req, res) => {
+router.get('/verifytest/:token', async (req, res) => {
     try {
         const { id } = jwt.verify(req.params.token, jwtEmailKey);
         await User.updateOne({ _id: id }, { emailVerified: true });
